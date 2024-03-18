@@ -2,6 +2,10 @@
 name = "sysinfo_dot_h"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "A tiny sys/sysinfo.h wrapper"
+readme = "README.md"
+repository = "https://github.com/WilliamAnimate/sysinfo_dot_h"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
