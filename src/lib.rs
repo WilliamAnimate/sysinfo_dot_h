@@ -1,3 +1,4 @@
+#[cfg(not(unix))] compile_error!("The <sys/sysinfo.h> struct is not present for non-unix platforms.");
 use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
 // https://stackoverflow.com/questions/349889/how-do-you-determine-the-amount-of-linux-system-ram-in-c
@@ -41,7 +42,6 @@ extern "C" {
 /// # soundness
 ///
 /// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
-#[cfg(unix)]
 pub fn try_collect() -> Result<Sysinfo, String> {
     unsafe {
         let mut info: Sysinfo = std::mem::zeroed();
@@ -72,7 +72,6 @@ pub fn try_collect() -> Result<Sysinfo, String> {
 /// # soundness
 ///
 /// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
-#[cfg(unix)]
 pub fn collect() -> Sysinfo {
     unsafe {
         let mut info: Sysinfo = std::mem::zeroed();
@@ -80,9 +79,6 @@ pub fn collect() -> Sysinfo {
         return info;
     }
 }
-
-#[cfg(not(unix))]
-pub fn collect() -> Result<sysinfo, ()> {compile_error!("The <sys/sysinfo.h> struct is not present for non-unix platforms.");}
 
 // cargo test -- --nocapture
 #[cfg(test)]
