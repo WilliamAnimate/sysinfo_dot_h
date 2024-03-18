@@ -1,7 +1,6 @@
 use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
 // https://stackoverflow.com/questions/349889/how-do-you-determine-the-amount-of-linux-system-ram-in-c
-/// the Sysinfo struct. Should be the same as it is in C.
 #[repr(C)]
 pub struct Sysinfo {
     pub uptime: c_long,             /* Seconds since boot */
@@ -21,6 +20,7 @@ pub struct Sysinfo {
 }
 
 extern "C" {
+    /// the sysinfo struct. Should be the same as it is in C.
     pub fn sysinfo(info: *mut Sysinfo) -> c_int;
 }
 
