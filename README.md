@@ -28,10 +28,8 @@ This makes it easier (and quicker) to port the following C code to rust:
 
 ```c
 #include <sys/sysinfo.h>
-
-int main(void) {
+int main() {
     struct sysinfo *info;
-
     sysinfo(info);
 }
 ```
