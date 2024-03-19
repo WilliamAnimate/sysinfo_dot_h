@@ -92,7 +92,7 @@ mod tests {
     }
 
     #[test]
-    fn fetch_uptime() {
+    fn try_fetch_uptime() {
         let result = try_collect();
         debug_assert!(result.is_ok()); // essentally the collect_sysinfo test
         let unwrapped = result.expect("💀");
