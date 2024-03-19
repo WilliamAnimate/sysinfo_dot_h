@@ -96,7 +96,13 @@ mod tests {
         let result = try_collect();
         debug_assert!(result.is_ok()); // essentally the collect_sysinfo test
         let unwrapped = result.expect("💀");
-        println!("fetch_uptime(): {}", unwrapped.uptime);
+        println!("try_fetch_uptime(): {}", unwrapped.uptime);
+    }
+
+    #[test]
+    fn fetch_uptime() {
+        let result = collect();
+        println!("fetch_uptime(): {}", result.uptime);
     }
 }
 
