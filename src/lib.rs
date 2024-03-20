@@ -30,7 +30,7 @@ extern "C" {
 /// The value returned is a Result that when `unwrap`ped (or `match`ed), works the same way as it does in C. If you want to get the uptime, all you have to do is
 /// `info.uptime`.
 ///
-/// # examples
+/// # Examples
 ///
 /// ```rust
 /// use sysinfo_dot_h::try_collect;
@@ -39,7 +39,12 @@ extern "C" {
 /// dbg!(info.uptime); // uptime in seconds
 /// ```
 ///
-/// # soundness
+/// # Errors
+///
+/// If the FFI call to `sysinfo()` fails, this function will return an `Err` type. This is
+/// unlikely to occur but heee's a heads up.
+///
+/// # Soundness
 ///
 /// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
 pub fn try_collect() -> Result<Sysinfo, String> {
@@ -57,8 +62,8 @@ pub fn try_collect() -> Result<Sysinfo, String> {
 /// A wrapper to C to get the sysinfo struct.
 ///
 /// The value that this function returns works the same way as it does in C. If you want to get the uptime, all you have to do is
-/// `info.uptime`. however, this is error prone and may return a malformed value. try calling
-/// `try_collect()` if you need a way to account for errors.
+/// `info.uptime`. however, this is error prone and may return a malformed value if the call to
+/// `sysinfo()` fails. Try calling `try_collect()` if you need a way to account for errors.
 ///
 /// # examples
 ///
