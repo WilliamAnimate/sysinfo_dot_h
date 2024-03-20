@@ -3,7 +3,8 @@ use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
 // https://stackoverflow.com/questions/349889/how-do-you-determine-the-amount-of-linux-system-ram-in-c
 #[repr(C)]
-pub struct Sysinfo {
+#[allow(non_camel_case_types)] // if uppercase, this may be a breaking change. fix in v1.
+pub struct sysinfo {
     pub uptime: c_long,             /* Seconds since boot */
     pub loads: [c_ulong; 3],        /* 1, 5, and 15 minute load averages */
     pub totalram: c_ulong,          /* Total usable main RAM size */
@@ -22,7 +23,7 @@ pub struct Sysinfo {
 
 extern "C" {
     /// The sysinfo struct. Should be the same as it is in C.
-    pub fn sysinfo(info: *mut Sysinfo) -> c_int;
+    pub fn sysinfo(info: *mut sysinfo) -> c_int;
 }
 
 /// A wrapper to C to get the sysinfo struct.
@@ -47,14 +48,14 @@ extern "C" {
 /// # Soundness
 ///
 /// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
-pub fn try_collect() -> Result<Sysinfo, String> {
+pub fn try_collect() -> Result<sysinfo, String> {
     unsafe {
-        let mut info: Sysinfo = std::mem::zeroed();
+        let mut info: sysinfo = std::mem::zeroed();
         let result = sysinfo(&mut info);
         if result == 0 {
             Ok(info)
         } else {
-           Err("Failed to get the Sysinfo struct".to_string())
+           Err("Failed to get the sysinfo struct".to_string())
         }
     }
 }
@@ -77,9 +78,9 @@ pub fn try_collect() -> Result<Sysinfo, String> {
 /// # soundness
 ///
 /// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
-pub fn collect() -> Sysinfo {
+#[must_use] pub fn collect() -> sysinfo {
     unsafe {
-        let mut info: Sysinfo = std::mem::zeroed();
+        let mut info: sysinfo = std::mem::zeroed();
         sysinfo(&mut info);
         info
     }
