@@ -17,11 +17,11 @@ pub struct Sysinfo {
     pub totalhigh: c_ulong,         /* Total high memory size */
     pub freehigh: c_ulong,          /* Available high memory size */
     pub mem_unit: c_uint,           /* Memory unit size in bytes */
-    pub _f: [c_char; 0],            /* Padding: libc doesn't define this field */
+    pub _f: [c_char; 0],            /* Padding. */
 }
 
 extern "C" {
-    /// the sysinfo struct. Should be the same as it is in C.
+    /// The sysinfo struct. Should be the same as it is in C.
     pub fn sysinfo(info: *mut Sysinfo) -> c_int;
 }
 
@@ -47,9 +47,9 @@ pub fn try_collect() -> Result<Sysinfo, String> {
         let mut info: Sysinfo = std::mem::zeroed();
         let result = sysinfo(&mut info);
         if result == 0 {
-            return Ok(info);
+            Ok(info)
         } else {
-            return Err("Failed to get the Sysinfo struct".to_string());
+           Err("Failed to get the Sysinfo struct".to_string())
         }
     }
 }
@@ -76,7 +76,7 @@ pub fn collect() -> Sysinfo {
     unsafe {
         let mut info: Sysinfo = std::mem::zeroed();
         sysinfo(&mut info);
-        return info;
+        info
     }
 }
 
