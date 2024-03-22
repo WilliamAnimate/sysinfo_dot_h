@@ -4,6 +4,7 @@ use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 // https://stackoverflow.com/questions/349889/how-do-you-determine-the-amount-of-linux-system-ram-in-c
 #[repr(C)]
 #[allow(non_camel_case_types)] // if uppercase, this may be a breaking change. fix in v1.
+#[derive(Debug, Copy, Clone)]
 pub struct sysinfo {
     pub uptime: c_long,             /* Seconds since boot */
     pub loads: [c_ulong; 3],        /* 1, 5, and 15 minute load averages */
