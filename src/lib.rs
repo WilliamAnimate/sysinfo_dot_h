@@ -1,3 +1,8 @@
+//! This crate uses raw FFI bindings to easily and quickly get and use the <sys/sysinfo.h> struct.
+//! Please read the [README](https://github.com/WilliamAnimate/sysinfo_dot_h?tab=readme-ov-file#sysinfo-dot-h) if you want to know more.
+//!
+//! Internally, this crate calls `unsafe {}` because of FFI. You, the programmer, are ultimately
+//! responsible for any downtime in prod or similar
 #[cfg(not(unix))] compile_error!("The <sys/sysinfo.h> struct is not present for non-unix platforms.");
 use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
