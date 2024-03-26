@@ -29,6 +29,20 @@ pub struct sysinfo {
 
 extern "C" {
     /// The sysinfo struct. Should be the same as it is in C.
+    ///
+    /// # Available fields:
+    /// - uptime: Seconds since boot
+    /// - totalram: total usuable main RAM size (in bytes)
+    /// - freeram: unused ram size (in bytes). freeram != available memory
+    /// - sharedram: amount of shared memory (in bytes)
+    /// - bufferram: memory used by buffers (in bytes)
+    /// - totalswap: total swap memory (in bytes)
+    /// - freeswap: available swap space (in bytes)
+    /// - procs: number of current processes
+    /// - pad: padding for m68k
+    /// - totalhigh: total high memory size
+    /// - freehigh: available high memory size
+    /// - mem_unit: memory unit size in bytes
     pub fn sysinfo(info: *mut sysinfo) -> c_int;
 }
 
