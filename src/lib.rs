@@ -31,6 +31,7 @@ extern "C" {
     /// The sysinfo struct. Should be the same as it is in C.
     ///
     /// # Available fields:
+    ///
     /// - uptime: Seconds since boot
     /// - totalram: total usuable main RAM size (in bytes)
     /// - freeram: unused ram size (in bytes). freeram != available memory
