@@ -66,9 +66,10 @@ extern "C" {
 /// If the FFI call to `sysinfo()` fails, this function will return an `Err` type. This is
 /// unlikely to occur but heee's a heads up.
 ///
-/// # Soundness
+/// # Safety
 ///
-/// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
+/// This function calls FFI. Realistically, this should never cause any undefined behaviour, as this is a call to <sys/sysinfo.h> from C.
+/// Data returned by this function is usuable outside of `unsafe` blocks.
 pub unsafe fn try_collect() -> Result<sysinfo, String> {
     let mut info: sysinfo = std::mem::zeroed();
     let result = sysinfo(&mut info);
@@ -85,7 +86,7 @@ pub unsafe fn try_collect() -> Result<sysinfo, String> {
 /// `info.uptime`. however, this is error prone and may return a malformed value if the call to
 /// `sysinfo()` fails. Try calling `try_collect()` if you need a way to account for errors.
 ///
-/// # examples
+/// # Examples
 ///
 /// ```rust
 /// use sysinfo_dot_h::collect;
@@ -94,9 +95,10 @@ pub unsafe fn try_collect() -> Result<sysinfo, String> {
 /// dbg!(info.uptime); // uptime in seconds
 /// ```
 ///
-/// # soundness
+/// # Safety
 ///
-/// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
+/// This function calls FFI. Realistically, this should never cause any undefined behaviour, as this is a call to <sys/sysinfo.h> from C.
+/// Data returned by this function is usuable outside of `unsafe` blocks.
 #[must_use]
 pub unsafe fn collect() -> sysinfo {
     let mut info: sysinfo = std::mem::zeroed();
