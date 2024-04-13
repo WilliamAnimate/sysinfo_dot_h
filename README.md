@@ -36,4 +36,5 @@ int main() {
 
 The [sysinfo](https://crates.io/crates/sysinfo) crate was too slow for my use case (200 milliseconds) so I made my own.
 
-Please note that unlike sysinfo, this crate only works on Linux (*nix? i only tested on Linux) so if your application is cross platform it may not be favourable to use this crate.
+Please note that unlike sysinfo, this crate only works on Linux, so if your application is cross platform it may not be favourable to use this crate.
+

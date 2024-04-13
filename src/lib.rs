@@ -3,7 +3,7 @@
 //!
 //! This entire crate requires an `unsafe` to call, because it is calling FFI functions (which
 //! the compiler cannot verify for safety.)
-#[cfg(not(unix))] compile_error!("The <sys/sysinfo.h> struct is not present for non-unix platforms.");
+#[cfg(not(target_os = "linux"))] compile_error!("The <sys/sysinfo.h> calls are only present in Linux.");
 use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
 // https://stackoverflow.com/questions/349889/how-do-you-determine-the-amount-of-linux-system-ram-in-c
