@@ -24,7 +24,7 @@ pub struct sysinfo {
     pub totalhigh: c_ulong,         /* Total high memory size */
     pub freehigh: c_ulong,          /* Available high memory size */
     pub mem_unit: c_uint,           /* Memory unit size in bytes */
-    pub _f: [c_char; 0],            /* Padding. */
+    _f: [c_char; 0],                /* Padding. */
 }
 
 extern "C" {
