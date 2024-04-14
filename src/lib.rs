@@ -11,20 +11,34 @@ use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 #[allow(non_camel_case_types)] // if uppercase, this may be a breaking change. fix in v1.
 #[derive(Debug, Copy, Clone)]
 pub struct sysinfo {
-    pub uptime: c_long,             /* Seconds since boot */
-    pub loads: [c_ulong; 3],        /* 1, 5, and 15 minute load averages */
-    pub totalram: c_ulong,          /* Total usable main RAM size */
-    pub freeram: c_ulong,           /* Available memory size */
-    pub sharedram: c_ulong,         /* Amount of shared memory */
-    pub bufferram: c_ulong,         /* Memory used by buffers */
-    pub totalswap: c_ulong,         /* Total swap space size */
-    pub freeswap: c_ulong,          /* Swap space still available */
-    pub procs: c_ushort,            /* Number of current processes */
-    pub pad: c_ushort,              /* Padding for m68k */
-    pub totalhigh: c_ulong,         /* Total high memory size */
-    pub freehigh: c_ulong,          /* Available high memory size */
-    pub mem_unit: c_uint,           /* Memory unit size in bytes */
-    _f: [c_char; 0],                /* Padding. */
+    /// Seconds since boot
+    pub uptime: c_long,
+    /// 1, 5, and 15 minute load averages
+    pub loads: [c_ulong; 3],
+    /// Total usable main RAM size
+    pub totalram: c_ulong,
+    /// Available memory size
+    pub freeram: c_ulong,
+    /// Amount of shared memory
+    pub sharedram: c_ulong,
+    /// Memory used by buffers
+    pub bufferram: c_ulong,
+    /// Total swap space size
+    pub totalswap: c_ulong,
+    /// Swap space still available
+    pub freeswap: c_ulong,
+    /// Number of current processes
+    pub procs: c_ushort,
+    /// Padding for m68k
+    pub pad: c_ushort,
+    /// Total high memory size
+    pub totalhigh: c_ulong,
+    /// Available high memory size
+    pub freehigh: c_ulong,
+    /// Memory unit size in bytes
+    pub mem_unit: c_uint,
+    /// Padding (you cant access this)
+    _f: [c_char; 0],
 }
 
 extern "C" {
