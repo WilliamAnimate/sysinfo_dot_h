@@ -1,8 +1,8 @@
 //! This crate uses raw FFI bindings to easily and quickly get and use the <sys/sysinfo.h> struct.
 //! Please read the [README](https://github.com/WilliamAnimate/sysinfo_dot_h?tab=readme-ov-file#sysinfo-dot-h) if you want to know more.
 //!
-//! This entire crate requires an `unsafe` to call, because it is calling FFI functions (which
-//! the compiler cannot verify for safety.)
+//! Internally, this crate calls `unsafe {}` because of FFI. You, the programmer, are ultimately
+//! responsible for any downtime in prod or similar
 #[cfg(not(target_os = "linux"))] compile_error!("The <sys/sysinfo.h> calls are only present in Linux.");
 use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 
@@ -57,7 +57,7 @@ extern "C" {
 /// ```rust
 /// use sysinfo_dot_h::try_collect;
 ///
-/// let info = unsafe { try_collect().unwrap() };
+/// let info = try_collect().unwrap();
 /// dbg!(info.uptime); // uptime in seconds
 /// ```
 ///
@@ -68,15 +68,16 @@ extern "C" {
 ///
 /// # Safety
 ///
-/// This function calls FFI. Realistically, this should never cause any undefined behaviour, as this is a call to <sys/sysinfo.h> from C.
-/// Data returned by this function is usuable outside of `unsafe` blocks.
-pub unsafe fn try_collect() -> Result<sysinfo, String> {
-    let mut info: sysinfo = std::mem::zeroed();
-    let result = sysinfo(&mut info);
-    if result == 0 {
-        Ok(info)
-    } else {
-       Err("Failed to get the sysinfo struct".to_string())
+/// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
+pub fn try_collect() -> Result<sysinfo, String> {
+    unsafe {
+        let mut info: sysinfo = std::mem::zeroed();
+        let result = sysinfo(&mut info);
+        if result == 0 {
+            Ok(info)
+        } else {
+           Err("Failed to get the sysinfo struct".to_string())
+        }
     }
 }
 
@@ -91,19 +92,19 @@ pub unsafe fn try_collect() -> Result<sysinfo, String> {
 /// ```rust
 /// use sysinfo_dot_h::collect;
 ///
-/// let info = unsafe { collect() };
+/// let info = collect();
 /// dbg!(info.uptime); // uptime in seconds
 /// ```
 ///
 /// # Safety
 ///
-/// This function calls FFI. Realistically, this should never cause any undefined behaviour, as this is a call to <sys/sysinfo.h> from C.
-/// Data returned by this function is usuable outside of `unsafe` blocks.
-#[must_use]
-pub unsafe fn collect() -> sysinfo {
-    let mut info: sysinfo = std::mem::zeroed();
-    sysinfo(&mut info);
-    info
+/// Although this function uses `unsafe{}` internally, it shouldn't cause any memory corruption bugs. The data returned by this function is usuable outside of `unsafe{}`.
+#[must_use] pub fn collect() -> sysinfo {
+    unsafe {
+        let mut info: sysinfo = std::mem::zeroed();
+        sysinfo(&mut info);
+        info
+    }
 }
 
 // cargo test -- --nocapture
@@ -113,13 +114,13 @@ mod tests {
 
     #[test]
     fn try_collect_sysinfo() {
-        let result = unsafe { try_collect() };
+        let result = try_collect();
         assert!(result.is_ok());
     }
 
     #[test]
     fn try_fetch_uptime() {
-        let result = unsafe { try_collect() };
+        let result = try_collect();
         debug_assert!(result.is_ok()); // essentally the collect_sysinfo test
         let unwrapped = result.expect("💀");
         println!("try_fetch_uptime(): {}", unwrapped.uptime);
@@ -127,7 +128,7 @@ mod tests {
 
     #[test]
     fn fetch_uptime() {
-        let result = unsafe { collect() };
+        let result = collect();
         println!("fetch_uptime(): {}", result.uptime);
     }
 }

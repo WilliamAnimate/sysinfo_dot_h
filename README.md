@@ -9,7 +9,7 @@ Quick start:
 ```rust
 use sysinfo_dot_h::try_collect;
 
-let info = unsafe { try_collect().unwrap() };
+let info = try_collect().unwrap();
 dbg!(info.uptime); // uptime in seconds
 ```
 
@@ -18,7 +18,7 @@ or
 ```rust
 use sysinfo_dot_h::collect;
 
-let info = unsafe { collect() };
+let info = collect();
 dbg!(info.uptime); // uptime in seconds
 ```
 
