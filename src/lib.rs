@@ -90,7 +90,7 @@ pub fn try_collect() -> Result<sysinfo, String> {
         if result == 0 {
             Ok(info)
         } else {
-           Err("Failed to get the sysinfo struct".to_string())
+            Err("Failed to get the sysinfo struct".to_string())
         }
     }
 }
