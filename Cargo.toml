@@ -8,7 +8,3 @@ readme = "README.md"
 repository = "https://github.com/WilliamAnimate/sysinfo_dot_h"
 categories = ["os::linux-apis", "api-bindings"]
 keywords = ["sysinfo", "linux", "FFI"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
