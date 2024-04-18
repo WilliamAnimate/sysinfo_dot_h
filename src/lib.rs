@@ -11,18 +11,18 @@ use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 ///
 /// # Available fields:
 ///
-/// - uptime: Seconds since boot
-/// - totalram: total usuable main RAM size (in bytes)
-/// - freeram: unused ram size (in bytes). freeram != available memory
-/// - sharedram: amount of shared memory (in bytes)
-/// - bufferram: memory used by buffers (in bytes)
-/// - totalswap: total swap memory (in bytes)
-/// - freeswap: available swap space (in bytes)
-/// - procs: number of current processes
-/// - pad: padding for m68k
-/// - totalhigh: total high memory size
-/// - freehigh: available high memory size
-/// - mem_unit: memory unit size in bytes
+/// - `uptime`: Seconds since boot
+/// - `totalram`: total usuable main RAM size (in bytes)
+/// - `freeram`: unused ram size (in bytes). freeram != available memory
+/// - `sharedram`: amount of shared memory (in bytes)
+/// - `bufferram`: memory used by buffers (in bytes)
+/// - `totalswap`: total swap memory (in bytes)
+/// - `freeswap`: available swap space (in bytes)
+/// - `procs`: number of current processes
+/// - `pad`: padding for m68k
+/// - `totalhigh`: total high memory size
+/// - `freehigh`: available high memory size
+/// - `mem_unit`: memory unit size in bytes
 #[repr(C)]
 #[allow(non_camel_case_types)] // if uppercase, this may be a breaking change. fix in v1.
 #[derive(Debug, Copy, Clone)]
