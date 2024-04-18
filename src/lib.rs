@@ -12,17 +12,18 @@ use std::os::raw::{c_long, c_ulong, c_ushort, c_uint, c_int, c_char};
 /// # Available fields:
 ///
 /// - `uptime`: Seconds since boot
-/// - `totalram`: total usuable main RAM size (in bytes)
-/// - `freeram`: unused ram size (in bytes). freeram != available memory
-/// - `sharedram`: amount of shared memory (in bytes)
-/// - `bufferram`: memory used by buffers (in bytes)
-/// - `totalswap`: total swap memory (in bytes)
-/// - `freeswap`: available swap space (in bytes)
-/// - `procs`: number of current processes
-/// - `pad`: padding for m68k
-/// - `totalhigh`: total high memory size
-/// - `freehigh`: available high memory size
-/// - `mem_unit`: memory unit size in bytes
+/// - `loads`: 1, 5, and 15 minute load averages
+/// - `totalram`: Total usable main memory size
+/// - `freeram`: Available memory size. (note: freeram != available memory)
+/// - `sharedram`: Amount of shared memory
+/// - `bufferram`: Memory used by buffers
+/// - `totalswap`: Total swap space size
+/// - `freeswap`: Swap space still available
+/// - `procs`: Number of current processes
+/// - `pad`: Padding for m68k
+/// - `totalhigh`: Total high memory size
+/// - `freehigh`: Available high memory size
+/// - `mem_unit`: Memory unit size in bytes
 #[repr(C)]
 #[allow(non_camel_case_types)] // if uppercase, this may be a breaking change. fix in v1.
 #[derive(Debug, Copy, Clone)]
@@ -31,9 +32,9 @@ pub struct sysinfo {
     pub uptime: c_long,
     /// 1, 5, and 15 minute load averages
     pub loads: [c_ulong; 3],
-    /// Total usable main RAM size
+    /// Total usuable main memory size
     pub totalram: c_ulong,
-    /// Available memory size
+    /// Available memory size. (note: freeram != available memory)
     pub freeram: c_ulong,
     /// Amount of shared memory
     pub sharedram: c_ulong,
